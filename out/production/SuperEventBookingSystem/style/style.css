@@ -14,14 +14,14 @@
     -fx-background-color: #3498db;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-padding: 10 20;
-    -fx-background-radius: 10;
+    -fx-padding: 10 25;
+    -fx-background-radius: 3;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 2, 2);
     -fx-transition: all 0.3s ease-in-out;
 }
 
-.button:hover {
+.button:hover, .button:focused {
     -fx-background-color: #2980b9;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0.4, 0, 2);
     -fx-translate-y: -2;
@@ -46,6 +46,7 @@
 /* LABELS */
 .label {
     -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
 }
 
 /* HEADERS */
