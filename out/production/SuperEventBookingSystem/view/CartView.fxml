@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="vBox"
+      xmlns="http://javafx.com/javafx/8"
+      spacing="15" alignment="CENTER"
+      style="-fx-padding: 20;" stylesheets="@../style/style.css">
+
+    <TableView fx:id="cartTable" prefHeight="300" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="titleCol" text="Title" />
+            <TableColumn fx:id="dayCol" text="Day" />
+            <TableColumn fx:id="qtyCol" text="Quantity" />
+            <TableColumn fx:id="subtotalCol" text="Subtotal" />
+            <TableColumn fx:id="actionCol" text="Action" />
+            <TableColumn fx:id="updateCol" text="Update" />
+        </columns>
+    </TableView>
+
+    <Label fx:id="totalLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="checkoutButton" text="Checkout" />
+        <Button fx:id="closeButton" text="Close" />
+    </HBox>
+</VBox>

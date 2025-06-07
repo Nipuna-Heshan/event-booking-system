@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="10" stylesheets="@../style/style.css" prefHeight="500" prefWidth="800">
+    <TableView fx:id="orderTable" prefHeight="400" prefWidth="700">
+        <columns>
+            <TableColumn fx:id="idColumn" text="Order No" prefWidth="100"/>
+            <TableColumn fx:id="dateTimeColumn" text="Date and Time" prefWidth="150"/>
+            <TableColumn fx:id="summaryColumn" text="Booked Events" prefWidth="350"/>
+            <TableColumn fx:id="totalColumn" text="Total Price" prefWidth="100"/>
+        </columns>
+    </TableView>
+    <Button fx:id="exportButton" text="Export to Text File"/>
+</VBox>

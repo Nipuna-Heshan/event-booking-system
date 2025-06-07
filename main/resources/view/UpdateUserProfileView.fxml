@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="15" alignment="CENTER"
+      stylesheets="@../style/style.css"
+      style="-fx-padding: 30;"
+      prefHeight="300"
+      maxHeight="Infinity"
+      minHeight="-Infinity"
+      fx:id="vBox"
+>
+    <Label text="Update Preferred Name"/>
+    <TextField fx:id="preferredNameField"/>
+    <Label text="Update Password"/>
+    <PasswordField fx:id="passwordField"/>
+
+    <Button fx:id="updateButton" text="Update"/>
+
+    <Label fx:id="statusLabel"/>
+</VBox>

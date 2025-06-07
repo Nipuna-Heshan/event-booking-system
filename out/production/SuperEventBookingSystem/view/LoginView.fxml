@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1"
+          alignment="CENTER"
+          hgap="10" vgap="10"
+          prefWidth="500" prefHeight="300"
+          stylesheets="@../style/style.css"
+          fx:id="formContainer"
+         >
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40" />
+    </padding>
+
+    <!-- Username -->
+    <Label text="User name"
+           GridPane.rowIndex="0" GridPane.columnIndex="0"
+           alignment="CENTER_RIGHT" />
+    <TextField fx:id="name"
+               promptText="Enter your username"
+               GridPane.rowIndex="0" GridPane.columnIndex="1"
+               maxWidth="200" />
+
+    <!-- Password -->
+    <Label text="Password"
+           GridPane.rowIndex="1" GridPane.columnIndex="0"
+           alignment="CENTER_RIGHT" />
+    <PasswordField fx:id="password"
+                   promptText="Enter your password"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   maxWidth="200" />
+
+    <!-- Buttons in a horizontal HBox -->
+    <HBox spacing="10"
+          alignment="CENTER"
+          GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <Button fx:id="login" text="Login" />
+        <Button fx:id="signup" text="Signup" />
+    </HBox>
+
+    <!-- Message Label -->
+    <Label fx:id="message"
+           GridPane.rowIndex="3" GridPane.columnIndex="1"
+           textFill="red"
+           wrapText="true" />
+</GridPane>

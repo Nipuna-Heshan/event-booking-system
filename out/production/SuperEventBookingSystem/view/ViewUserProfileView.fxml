@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="15" alignment="CENTER"
+      stylesheets="@../style/style.css"
+      style="-fx-padding: 30;"
+      prefHeight="250"
+      prefWidth="300"
+      maxHeight="Infinity"
+      minHeight="-Infinity"
+      fx:id="vBox"
+>
+
+    <Label styleClass="title" text="User Profile"
+            />
+
+    <Label fx:id="usernameLabel" />
+    <Label fx:id="preferredNameLabel" />
+    <Label fx:id="passwordLabel" />
+    <Button fx:id="updateProfileButton" text="Update Profile" />
+</VBox>

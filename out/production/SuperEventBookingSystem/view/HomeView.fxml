@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/18"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="20" alignment="TOP_CENTER"
+      stylesheets="@../style/style.css"
+      prefWidth="600" prefHeight="400"
+      fx:id="vBox"
+>
+
+  <Label fx:id="welcomeLabel"
+          styleClass="title"/>
+
+  <MenuBar>
+    <menus>
+      <Menu text="Profile">
+        <MenuItem fx:id="viewProfile" text="View My Profile"/>
+        <MenuItem fx:id="logoutMenuItem" text="Logout" />
+      </Menu>
+      <Menu text="Cart">
+        <MenuItem fx:id="viewCartMenuItem" text="View Cart" />
+      </Menu>
+      <Menu text="Orders">
+        <MenuItem fx:id="viewOrderHistory" text="Order History" />
+      </Menu>
+    </menus>
+  </MenuBar>
+
+  <AnchorPane fx:id="contentArea" prefHeight="400.0" prefWidth="600.0"/>
+</VBox>

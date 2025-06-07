@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" fx:id="vBox" alignment="CENTER" prefWidth="250" prefHeight="300" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../style/style.css">
+    <Label fx:id="eventNameLabel" />
+    <Spinner fx:id="quantitySpinner" editable="true" />
+    <Label fx:id="availabilityLabel" />
+    <Button fx:id="addToCartButton" text="Add to Cart" />
+</VBox>

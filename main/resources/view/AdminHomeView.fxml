@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+            prefWidth="800" prefHeight="600">
+
+    <!-- Menu Bar -->
+    <MenuBar AnchorPane.topAnchor="0.0" prefHeight="25">
+        <Menu text="Options">
+            <MenuItem fx:id="addEventMenu" text="Add Event"/>
+            <MenuItem fx:id="viewAllOrdersMenu" text="View All Orders"/>
+            <MenuItem fx:id="logoutMenu" text="Logout"/>
+        </Menu>
+    </MenuBar>
+
+    <!-- Welcome Label -->
+    <Label fx:id="welcomeLabel" layoutX="20" layoutY="40"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <!-- Event Table -->
+    <TableView fx:id="eventTable" layoutX="20" layoutY="70" prefWidth="760" prefHeight="500">
+        <columns>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="120"/>
+            <TableColumn fx:id="locationColumn" text="Location" prefWidth="100"/>
+            <TableColumn fx:id="dayColumn" text="Day" prefWidth="100"/>
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="80"/>
+            <TableColumn fx:id="capacityColumn" text="Capacity" prefWidth="80"/>
+            <TableColumn fx:id="soldColumn" text="Sold" prefWidth="80"/>
+            <TableColumn fx:id="disableColumn" text="Enabled" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <AnchorPane fx:id="contentArea" prefHeight="400.0" prefWidth="600.0"/>
+</VBox>
+
