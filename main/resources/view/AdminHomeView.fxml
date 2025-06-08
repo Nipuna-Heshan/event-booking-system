@@ -4,8 +4,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-            prefWidth="800" prefHeight="600">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@../style/style.css"
+      prefWidth="900" prefHeight="800" fx:id="vBox">
+
+    <StackPane>
+        <ImageView fx:id="logoImageView"
+                   fitWidth="900"
+                   preserveRatio="false"
+                   smooth="true"
+                   pickOnBounds="true">
+            <image>
+                <Image url="@../images/adminView.jpg" />
+            </image>
+        </ImageView>
+
+        <Region style="-fx-background-color: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));"
+                prefWidth="Infinity" StackPane.alignment="CENTER"/>
+
+        <Label fx:id="welcomeLabel"
+               style="-fx-text-fill: white; -fx-font-size: 40px; -fx-font-weight: bold;" wrapText="true" textAlignment="LEFT"
+               alignment="CENTER" maxWidth="400" maxHeight="200"
+               lineSpacing="-12"
+        />
+    </StackPane>
 
     <!-- Menu Bar -->
     <MenuBar AnchorPane.topAnchor="0.0" prefHeight="25">
@@ -16,9 +39,8 @@
         </Menu>
     </MenuBar>
 
-    <!-- Welcome Label -->
-    <Label fx:id="welcomeLabel" layoutX="20" layoutY="40"
-           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 20;" wrapText="true" text="Events" textAlignment="LEFT"
+           maxWidth="400" maxHeight="200" lineSpacing="-12"/>
 
     <!-- Event Table -->
     <TableView fx:id="eventTable" layoutX="20" layoutY="70" prefWidth="760" prefHeight="500">
@@ -33,6 +55,10 @@
         </columns>
     </TableView>
 
-    <AnchorPane fx:id="contentArea" prefHeight="400.0" prefWidth="600.0"/>
+    <AnchorPane fx:id="contentArea" prefHeight="600" prefWidth="700.0">
+        <padding>
+            <Insets top="20" right="30" bottom="20" left="30"/>
+        </padding>
+    </AnchorPane>
 </VBox>
 

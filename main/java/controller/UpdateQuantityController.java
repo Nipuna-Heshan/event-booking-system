@@ -36,12 +36,13 @@ public class UpdateQuantityController {
         TransitionUtils.vBoxTransition(vBox);
         TransitionUtils.buttonTransition(updateButton);
         TransitionUtils.buttonTransition(cancelButton);
+        TransitionUtils.textFieldTransition(quantityField);
 
 
         Event event = item.getEvent();
         int maxAvailable = event.getRemainingTickets() - item.getQuantity();
 
-        eventLabel.setText("Event: " + event.getTitle());
+        eventLabel.setText(event.getTitle());
         availableLabel.setText("Available: " + (maxAvailable<0?"Not enough tickets are available":maxAvailable));
         if(maxAvailable < 0){
             quantityField.setDisable(true);
@@ -53,22 +54,25 @@ public class UpdateQuantityController {
                 int updateQty = Integer.parseInt(quantityField.getText());
                 int newQty = Integer.parseInt(quantityField.getText()) + item.getQuantity();
                 if (updateQty <= 0 || updateQty > maxAvailable) {
-                    showAlert("Only " + maxAvailable + " tickets are available!");
+                    showAlert(Alert.AlertType.ERROR, "Only " + maxAvailable + " tickets are available!");
                     return;
                 }
                 item.setQuantity(newQty);
                 onUpdate.run();
                 stage.close();
             } catch (NumberFormatException ex) {
-                showAlert("Please enter a valid number.");
+                showAlert(Alert.AlertType.ERROR, "Please enter a valid number.");
             }
         });
 
         cancelButton.setOnAction(e -> stage.close());
     }
 
-    private void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
         alert.showAndWait();
     }
 }

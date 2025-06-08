@@ -3,23 +3,48 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15" alignment="CENTER"
+      spacing="15" alignment="TOP_LEFT"
       stylesheets="@../style/style.css"
-      style="-fx-padding: 30;"
-      prefHeight="250"
+      prefHeight="450"
       prefWidth="300"
       maxHeight="Infinity"
       minHeight="-Infinity"
       fx:id="vBox"
 >
+    <StackPane maxWidth="300">
+        <ImageView fx:id="logoImageView"
+                   fitHeight="250"
+                   preserveRatio="true"
+                   smooth="true"
+                   pickOnBounds="true">
+            <image>
+                <Image url="@../images/UserProfileView.jpeg" />
+            </image>
+        </ImageView>
 
-    <Label styleClass="title" text="User Profile"
-            />
+        <Region style="-fx-background-color: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));"
+                StackPane.alignment="BOTTOM_CENTER"
+                maxHeight="250" maxWidth="Infinity" />
 
-    <Label fx:id="usernameLabel" />
-    <Label fx:id="preferredNameLabel" />
-    <Label fx:id="passwordLabel" />
-    <Button fx:id="updateProfileButton" text="Update Profile" />
+        <Label text="User Profile"
+               StackPane.alignment="BOTTOM_LEFT"
+               style="-fx-text-fill: white; -fx-font-size: 40px; -fx-font-weight: bold; -fx-padding: 20;"
+               wrapText="true"
+               alignment="CENTER_LEFT"
+               textAlignment="LEFT"
+               lineSpacing="-12"/>
+    </StackPane>
+    <VBox style="-fx-padding: 10 20;" spacing="10">
+        <Label fx:id="usernameLabel" />
+        <Label fx:id="preferredNameLabel" />
+        <Label fx:id="passwordLabel" />
+        <HBox prefWidth="300" alignment="CENTER_LEFT" style="-fx-padding: 20 0;">
+            <Button fx:id="updateProfileButton" text="Update Profile" />
+        </HBox>
+
+    </VBox>
 </VBox>

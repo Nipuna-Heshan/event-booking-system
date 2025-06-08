@@ -4,16 +4,14 @@ import java.sql.SQLException;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Model;
 import model.User;
-import util.MessageCodeUtils;
 import util.PasswordUtils;
 import util.TransitionUtils;
 
@@ -29,9 +27,7 @@ public class SignupController {
 	@FXML
 	private Button close;
 	@FXML
-	private Label status;
-	@FXML
-	private VBox vBox;
+	private GridPane formContainer;
 	
 	private Stage stage;
 	private Stage parentStage;
@@ -85,7 +81,10 @@ public class SignupController {
 			}
 		});
 
-		TransitionUtils.vBoxTransition(vBox);
+		TransitionUtils.gridTransition(formContainer);
+		TransitionUtils.textFieldTransition(username);
+		TransitionUtils.textFieldTransition(preferredName);
+		TransitionUtils.textFieldTransition(password);
 		TransitionUtils.buttonTransition(createUser);
 		TransitionUtils.buttonTransition(close);
 
@@ -96,20 +95,20 @@ public class SignupController {
 					String encryptedPassword = PasswordUtils.encrypt(password.getText());
 					user = model.getUserDao().createUser(username.getText(), preferredName.getText(), encryptedPassword);
 					if (user != null) {
-						MessageCodeUtils.showSuccess(status, user.getUsername() + "created");
+						showAlert(Alert.AlertType.INFORMATION, user.getUsername() + " created successfully!");
 					} else {
-						MessageCodeUtils.showError(status, "Cannot create user.");
+						showAlert(Alert.AlertType.ERROR, "Cannot create user.");
 					}
 				} catch (SQLException e) {
 					if (e.getMessage().contains("UNIQUE") || e.getMessage().contains("constraint")) {
-						MessageCodeUtils.showError(status,"Username already exists.");
+						showAlert(Alert.AlertType.ERROR, "Username already exists.");
 					} else {
-						status.setText(e.getMessage());
+						showAlert(Alert.AlertType.ERROR, e.getMessage());
 					}
 				}
 				
 			} else {
-				MessageCodeUtils.showError(status, "Empty username or password");
+				showAlert(Alert.AlertType.ERROR, "Empty username or preferred name or password");
 			}
 		});
 
@@ -120,10 +119,18 @@ public class SignupController {
 	}
 	
 	public void showStage(Pane root) {
-		Scene scene = new Scene(root, 500, 300);
+		Scene scene = new Scene(root, 400, 550);
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("Sign up");
 		stage.show();
+	}
+
+	private void showAlert(Alert.AlertType type, String msg) {
+		Alert alert = new Alert(type);
+		alert.setTitle("Cart");
+		alert.setHeaderText(null);
+		alert.setContentText(msg);
+		alert.showAndWait();
 	}
 }

@@ -7,31 +7,32 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
 
-<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../style/style.css">
-   <children>
-      <Label prefHeight="17.0" prefWidth="250.0" text="Username" />
-      <TextField fx:id="username" maxWidth="250.0">
-         <VBox.margin>
-            <Insets bottom="5.0" />
-         </VBox.margin></TextField>
-      <Label prefHeight="17.0" prefWidth="250.0" text="Preferred Name" />
-      <TextField fx:id="preferredName" maxWidth="250.0">
-         <VBox.margin>
-            <Insets bottom="5.0" />
-         </VBox.margin></TextField>
-      <Label prefWidth="250.0" text="Password" />
-      <PasswordField fx:id="password" maxWidth="250.0">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </PasswordField>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
-         <children>
+<GridPane fx:id="formContainer"
+          xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1"
+          alignment="CENTER"
+          hgap="10" vgap="15"
+          prefWidth="400" prefHeight="550"
+          stylesheets="@../style/style.css">
+   <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" alignment="TOP_LEFT" spacing="20">
+      <GridPane hgap="10" vgap="15" alignment="CENTER" HBox.hgrow="ALWAYS">
+         <padding>
+            <Insets top="20" right="30" bottom="20" left="30" />
+         </padding>
+         <Label text="Sign Up"  style="-fx-text-fill: #011E26; -fx-font-size: 24px; -fx-font-weight: bold;" wrapText="true" textAlignment="CENTER"
+                GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+         <Label prefHeight="17.0" text="Username" GridPane.rowIndex="1" GridPane.columnIndex="0" alignment="CENTER_RIGHT" />
+         <TextField fx:id="username" maxWidth="200.0" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Enter your username" alignment="CENTER_LEFT"/>
+         <Label prefHeight="17.0" text="Preferred Name" GridPane.rowIndex="2" GridPane.columnIndex="0" alignment="CENTER_RIGHT" />
+         <TextField fx:id="preferredName" maxWidth="200.0"  GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Enter a preferred name" alignment="CENTER_LEFT"/>
+         <Label  text="Password" GridPane.rowIndex="3" GridPane.columnIndex="0" alignment="CENTER_RIGHT"/>
+         <PasswordField fx:id="password" maxWidth="200.0" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Enter a password" alignment="CENTER_LEFT"/>
+      </GridPane>
+   </HBox>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="1" GridPane.columnIndex="1">
             <Button fx:id="createUser" mnemonicParsing="false" text="Create user" />
             <Button fx:id="close" mnemonicParsing="false" text="Close" />
-         </children>
       </HBox>
-      <Label fx:id="status" />
-   </children>
-</VBox>
+</GridPane>

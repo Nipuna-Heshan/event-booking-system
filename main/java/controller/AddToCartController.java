@@ -1,10 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Cart;
@@ -18,8 +15,8 @@ import java.sql.SQLException;
 public class AddToCartController {
     @FXML
     private Label eventNameLabel;
-    @FXML private Label availabilityLabel;
     @FXML private Spinner<Integer> quantitySpinner;
+    @FXML private Label availabilityLabel;
     @FXML private Button addToCartButton;
     @FXML private VBox vBox;
 
@@ -39,8 +36,9 @@ public class AddToCartController {
     public void initialize() {
         TransitionUtils.vBoxTransition(vBox);
         TransitionUtils.buttonTransition(addToCartButton);
+        TransitionUtils.spinnerTransition(quantitySpinner);
 
-        eventNameLabel.setText("Event: " + event.getTitle());
+        eventNameLabel.setText(event.getTitle());
         int available = event.getRemainingTickets() - cart.getQuantityInCart(event);
         available = Math.max(available, 1);
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, available);
@@ -54,7 +52,7 @@ public class AddToCartController {
     public void handleAddToCart() {
         int qty = quantitySpinner.getValue();
         if (qty > event.getRemainingTickets() - cart.getQuantityInCart(event)) {
-            availabilityLabel.setText("Not enough tickets available.");
+            showAlert(Alert.AlertType.ERROR, "Not enough tickets available.");
             return;
         }
 
@@ -68,10 +66,17 @@ public class AddToCartController {
             }
             model.getUserCartDao().addToCart(model.getCurrentUser().getUsername(), event, qty);
         }catch (SQLException e){
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
         stage.close();
     }
 
-
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }

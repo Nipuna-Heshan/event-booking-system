@@ -2,9 +2,11 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Event;
 import model.Model;
+import util.TransitionUtils;
 
 public class AddEventController {
     @FXML
@@ -18,6 +20,7 @@ public class AddEventController {
     @FXML private Label errorLabel;
     @FXML private Button addEvent;
     @FXML private Button cancel;
+    @FXML private VBox vBox;
 
     private Model model;
     private Runnable onAddEvent;
@@ -30,6 +33,17 @@ public class AddEventController {
     }
 
     public void initialize(){
+        TransitionUtils.vBoxTransition(vBox);
+        TransitionUtils.textFieldTransition(titleField);
+        TransitionUtils.textFieldTransition(locationField);
+        TransitionUtils.textFieldTransition(priceField);
+        TransitionUtils.textFieldTransition(totalTicketsField);
+        TransitionUtils.textFieldTransition(soldTicketsField);
+        TransitionUtils.comboBoxTransition(dayCombo);
+        TransitionUtils.buttonTransition(addEvent);
+        TransitionUtils.buttonTransition(cancel);
+
+
         titleField.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case DOWN, ENTER -> locationField.requestFocus();
@@ -38,22 +52,15 @@ public class AddEventController {
 
         locationField.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case ENTER, DOWN -> dayCombo.requestFocus();
-                case UP -> titleField.requestFocus();
-            }
-        });
-
-        dayCombo.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
                 case ENTER, DOWN -> priceField.requestFocus();
-                case UP -> locationField.requestFocus();
+                case UP -> titleField.requestFocus();
             }
         });
 
         priceField.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ENTER, DOWN -> totalTicketsField.requestFocus();
-                case UP -> dayCombo.requestFocus();
+                case UP -> locationField.requestFocus();
             }
         });
 
@@ -107,7 +114,7 @@ public class AddEventController {
         boolean isEnabled = enabledCheckBox.isSelected();
 
         if (title.isEmpty() || location.isEmpty() || day.isEmpty() || priceText.isEmpty() || totalText.isEmpty()) {
-            errorLabel.setText("Please fill in all required fields.");
+            showAlert(Alert.AlertType.ERROR, "Please fill in all required fields.");
             return;
         }
 
@@ -117,7 +124,7 @@ public class AddEventController {
             int soldTickets = soldText.isEmpty() ? 0 : Integer.parseInt(soldText);
 
             if (soldTickets > totalTickets) {
-                errorLabel.setText("Sold tickets cannot exceed total tickets.");
+                showAlert(Alert.AlertType.ERROR, "Sold tickets cannot exceed total tickets.");
                 return;
             }
 
@@ -125,7 +132,7 @@ public class AddEventController {
             Event existing = model.getEventDao().findEvent(newEvent.getTitle(), newEvent.getLocation(), newEvent.getDay());
             if (existing != null) {
                 // Duplicate found, return -1 or throw an exception
-                System.out.println("Duplicate event exists. Cannot add.");
+                showAlert(Alert.AlertType.ERROR, "Duplicate event exists. Cannot add.");
                 return;
             }
             model.getEventDao().addEvent(newEvent);
@@ -134,10 +141,10 @@ public class AddEventController {
 
 
         } catch (NumberFormatException e) {
-            errorLabel.setText("Please enter valid numbers for price, total tickets, and sold tickets.");
+            showAlert(Alert.AlertType.ERROR, "Please enter valid numbers for price, total tickets, and sold tickets.");
         } catch (Exception e) {
             e.printStackTrace();
-            errorLabel.setText("Error: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error: " + e.getMessage());
         }
     }
 
@@ -145,7 +152,12 @@ public class AddEventController {
         stage.close();
     }
 
-    private void closeWindow() {
-        stage.close();
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
+
 }

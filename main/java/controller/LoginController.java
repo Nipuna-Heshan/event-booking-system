@@ -3,24 +3,16 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.Duration;
 import model.Model;
 import model.User;
-import util.MessageCodeUtils;
 import util.PasswordUtils;
 import util.TransitionUtils;
 
@@ -29,8 +21,6 @@ public class LoginController {
 	private TextField name;
 	@FXML
 	private PasswordField password;
-	@FXML
-	private Label message;
 	@FXML
 	private Button login;
 	@FXML
@@ -45,15 +35,14 @@ public class LoginController {
 		this.stage = stage;
 		this.model = model;
 	}
-
-
-
 	
 	@FXML
 	public void initialize() {
 		TransitionUtils.gridTransition(formContainer);
 		TransitionUtils.buttonTransition(login);
 		TransitionUtils.buttonTransition(signup);
+		TransitionUtils.textFieldTransition(name);
+		TransitionUtils.passwordFieldTransition(password);
 
 		name.setOnKeyPressed(event -> {
 			switch (event.getCode()) {
@@ -95,10 +84,8 @@ public class LoginController {
 						try{
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminHomeView.fxml"));
 							AdminHomeController adminHomeController = new AdminHomeController(stage, model);
-
 							loader.setController(adminHomeController);
 							VBox root = loader.load();
-
 							adminHomeController.showStage(root);
 							stage.close();
 						}catch (IOException e){
@@ -113,25 +100,23 @@ public class LoginController {
 						try {
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/HomeView.fxml"));
 							HomeController homeController = new HomeController(stage, model);
-							
 							loader.setController(homeController);
 							VBox root = loader.load();
-	
 							homeController.showStage(root);
 							stage.close();
 						}catch (IOException e) {
-							message.setText(e.getMessage());
+							showAlert(Alert.AlertType.ERROR, e.getMessage());
 						}
 						
 					} else {
-						MessageCodeUtils.showError(message, "Wrong username or password");
+						showAlert(Alert.AlertType.ERROR, "Wrong username or password!");
 					}
 				} catch (SQLException e) {
-					message.setText(e.getMessage());
+					showAlert(Alert.AlertType.ERROR, e.getMessage());
 				}
 				
 			} else {
-				MessageCodeUtils.showError(message,"Empty username or password");
+				showAlert(Alert.AlertType.ERROR, "Empty username or password!");
 				name.clear();
 				password.clear();
 			}
@@ -140,31 +125,33 @@ public class LoginController {
 		signup.setOnAction(event -> {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignupView.fxml"));
-				
 				// Customize controller instance
 				SignupController signupController =  new SignupController(stage, model);
-
 				loader.setController(signupController);
-				VBox root = loader.load();
-				
+				GridPane root = loader.load();
 				signupController.showStage(root);
-				
-				message.setText("");
 				name.clear();
 				password.clear();
-				
 				stage.close();
 			} catch (IOException e) {
-				message.setText(e.getMessage());
+				showAlert(Alert.AlertType.ERROR, e.getMessage());
 			}});
 	}
 	
 	public void showStage(Pane root) {
-		Scene scene = new Scene(root, 500, 300);
+		Scene scene = new Scene(root, 400, 550);
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("Welcome");
 		stage.show();
+	}
+
+	private void showAlert(Alert.AlertType type, String msg) {
+		Alert alert = new Alert(type);
+		alert.setTitle("Cart");
+		alert.setHeaderText(null);
+		alert.setContentText(msg);
+		alert.showAndWait();
 	}
 }
 

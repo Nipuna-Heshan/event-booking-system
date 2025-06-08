@@ -4,12 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Model;
-import util.MessageCodeUtils;
 import util.PasswordUtils;
 import util.TransitionUtils;
 
 import java.sql.SQLException;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class UpdateUserProfileController {
     @FXML private TextField preferredNameField;
@@ -47,6 +45,9 @@ public class UpdateUserProfileController {
 
         TransitionUtils.buttonTransition(updateButton);
         TransitionUtils.vBoxTransition(vBox);
+        TransitionUtils.textFieldTransition(preferredNameField);
+        TransitionUtils.passwordFieldTransition(passwordField);
+
         String prevPassword = PasswordUtils.decrypt(model.getCurrentUser().getPassword());
         preferredNameField.setText(model.getCurrentUser().getPreferredName());
         passwordField.setText(prevPassword);
@@ -55,7 +56,7 @@ public class UpdateUserProfileController {
             String newPreferredName = preferredNameField.getText().trim();
             String newPassword = passwordField.getText().trim();
             if (newPreferredName.isEmpty() && newPassword.isEmpty()) {
-                MessageCodeUtils.showError(statusLabel, "Password and preferred name cannot be empty.");
+                showAlert(Alert.AlertType.ERROR, "Password and preferred name cannot be empty.");
                 return;
             }
 
@@ -65,12 +66,20 @@ public class UpdateUserProfileController {
                 model.getUserDao().updateUserProfile(model.getCurrentUser().getUsername(), newPreferredName, encrypted);
                 model.getCurrentUser().setPassword(encrypted);
                 model.getCurrentUser().setPreferredName(newPreferredName);
-                MessageCodeUtils.showSuccess(statusLabel, "Profile updated successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Profile updated successfully.");
                 onProfileUpdate.run();
             } catch (SQLException ex) {
-                MessageCodeUtils.showError(statusLabel, "Failed: " + ex.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Failed: " + ex.getMessage());
             }
 
         });
+    }
+
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

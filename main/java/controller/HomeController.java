@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,7 +63,7 @@ public class HomeController {
 	@FXML
 	public void initialize() throws IOException {
 
-		TransitionUtils.vBoxTransition(vBox);
+		TransitionUtils.vBoxHomeTransition(vBox);
 
 		if (model.getCurrentUser() != null) {
 			welcomeLabel.setText("Welcome, " + model.getCurrentUser().getPreferredName() + "!");
@@ -70,17 +71,15 @@ public class HomeController {
 
 		viewProfile.setOnAction(e -> {
 			try {
-				System.out.println(getClass().getResource("/view/ViewUserProfileView.fxml"));
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ViewUserProfileView.fxml"));
-				ViewUserProfileController viewController = new ViewUserProfileController(model, this::welcomeRefresh);
-				loader.setController(viewController);
-				Pane root = loader.load();
 				Stage viewStage = new Stage();
-				viewStage.setTitle("My Profile");
-				viewStage.setScene(new Scene(root));
-				viewStage.show();
+				ViewUserProfileController viewController = new ViewUserProfileController(model, this::welcomeRefresh, viewStage);
+				loader.setController(viewController);
+				VBox root = loader.load();
+				ViewUserProfileController.showStage(root);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				showAlert(Alert.AlertType.ERROR, ex.getMessage());
 			}
 		});
 
@@ -97,6 +96,7 @@ public class HomeController {
 				cartStage.show();
 			} catch (IOException ex) {
 				ex.printStackTrace();
+				showAlert(Alert.AlertType.ERROR, ex.getMessage());
 			}
 		});
 		try{
@@ -104,6 +104,7 @@ public class HomeController {
 			cart.setItems(cartItems);
 		}catch (SQLException e){
 			e.printStackTrace();
+			showAlert(Alert.AlertType.ERROR, e.getMessage());
 		}
 
 		logoutMenuItem.setOnAction(e -> {
@@ -116,6 +117,7 @@ public class HomeController {
 				stage.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
+				showAlert(Alert.AlertType.ERROR, ex.getMessage());
 			}
 		});
 
@@ -133,14 +135,15 @@ public class HomeController {
 				historyStage.show();
 			} catch (IOException ex) {
 				ex.printStackTrace();
+				showAlert(Alert.AlertType.ERROR, ex.getMessage());
 			}
 		});
 
 
 	}
 
-	public void showStage(Pane root) {
-		Scene scene = new Scene(root, 800, 500);
+	public void showStage(VBox root) {
+		Scene scene = new Scene(root, 800,  800);
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("Home");
@@ -187,7 +190,9 @@ public class HomeController {
 			private final Button button = new Button("Add to Cart");
 
 
+
 			{
+				TransitionUtils.buttonTransition(button);
 				button.setOnAction(e -> {
 					Event selectedEvent = getTableView().getItems().get(getIndex());
 					showAddToCartModal(selectedEvent);
@@ -223,6 +228,7 @@ public class HomeController {
 			table.setItems(allEvents);
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			showAlert(Alert.AlertType.ERROR, ex.getMessage());
 		}
 
 		contentArea.getChildren().clear();
@@ -252,6 +258,15 @@ public class HomeController {
 			modalStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
+			showAlert(Alert.AlertType.ERROR, e.getMessage());
 		}
+	}
+
+	private void showAlert(Alert.AlertType type, String msg) {
+		Alert alert = new Alert(type);
+		alert.setTitle("Cart");
+		alert.setHeaderText(null);
+		alert.setContentText(msg);
+		alert.showAndWait();
 	}
 }

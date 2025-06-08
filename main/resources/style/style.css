@@ -11,8 +11,8 @@
 
 /* BUTTON STYLING */
 .button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
+    -fx-background-color: #011E26;
+    -fx-text-fill: #FFBB00;
     -fx-font-weight: bold;
     -fx-padding: 10 25;
     -fx-background-radius: 3;
@@ -22,30 +22,29 @@
 }
 
 .button:hover, .button:focused {
-    -fx-background-color: #2980b9;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0.4, 0, 2);
-    -fx-translate-y: -2;
 }
 
 /* TEXTFIELD + PASSWORD FIELD */
 .text-field, .password-field {
     -fx-background-color: #ffffff;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 6;
+    -fx-border-color: #011E26;
+    -fx-border-radius: 3;
     -fx-background-radius: 6;
     -fx-padding: 8;
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.05), 1, 0.1, 1, 1);
 }
 
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #3498db;
+.text-field:focused, .password-field:focused, .text-field:hover, .password-field:hover {
+    -fx-border-color: #FFBB00;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, #3498db, 5, 0.1, 0, 0);
+    -fx-effect: dropshadow(gaussian, #FFBB00, 5, 0.1, 0, 0);
+    -fx-transition: ease-in-out;
 }
 
 /* LABELS */
 .label {
-    -fx-text-fill: #2c3e50;
+    -fx-text-fill: #011E26;
     -fx-font-size: 14px;
 }
 
@@ -62,48 +61,124 @@
     -fx-text-fill: #34495e;
 }
 
-.menu-bar {
-    -fx-background-color: #2c3e50;
-    -fx-padding: 0;
-}
-
-.menu-bar > .container > .menu-button {
-    -fx-background-color: transparent;
-    -fx-padding: 8 12;
-}
-
-.menu-bar > .container > .menu-button:hover,
-.menu-bar > .container > .menu-button:showing {
-    -fx-background-color: #34495e;
-}
-
-.menu-bar > .container > .menu-button > .label {
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-.menu-bar > .container > .menu-button:hover > .label,
-.menu-bar > .container > .menu-button:showing > .label {
-    -fx-text-fill: white;
-}
-
-.context-menu {
-    -fx-background-color: white;
-    -fx-border-color: #ccc;
-    -fx-padding: 4 0;
-}
-
-/* This targets menu dropdowns */
+/* Style normal MenuItem */
 .menu-item {
-    -fx-padding: 6 16;
-    -fx-text-fill: #2c3e50;
+    -fx-background-color: #011E26;
 }
 
+.menu-item .label {
+    -fx-text-fill: #FFBB00;
+}
+
+/* Hovered MenuItem */
 .menu-item:hover {
-    -fx-background-color: #e8f0fe;
-    -fx-text-fill: #2980b9;
+    -fx-background-color: #FFBB00;   /* dark blue background */
+
 }
 
-.v-box {
-    -fx-padding: 10;
+.menu-item:hover .label {
+    -fx-text-fill: #011E26;
 }
+/* Style normal Menu */
+.menu {
+    -fx-background-color: #011E26;
+}
+
+.menu > .label {
+    -fx-text-fill: #FFBB00;
+}
+
+.menu:hover {
+    -fx-background-color: #FFBB00;
+}
+
+/* Hovered Menu */
+.menu:hover > .label {
+    -fx-text-fill: #011E26;
+}
+
+/* MenuBar background (optional) */
+.menu-bar {
+    -fx-background-color: #011E26; /* light gray */
+}
+
+.table-view {
+    -fx-border-color: #FFBB00; /* Border color */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #011E26; /* dark background */
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-size: 35px; /* header row height */
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #FFBB00;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+
+.table-view .table-cell {
+    -fx-alignment: CENTER;
+}
+
+/* Target all ComboBoxes */
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-background-color: #011E26;
+    -fx-border-color: #FFBB00;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+/* When hovered */
+.combo-box:hover {
+    -fx-border-color: #011E26;
+    -fx-background-color: #FFBB00;
+}
+
+
+/* When focused */
+.combo-box:focused {
+    -fx-border-color: #011E26;
+    -fx-background-color: #FFBB00;
+}
+
+/* Dropdown arrow button */
+.combo-box .arrow-button {
+    -fx-background-color: #011E26;
+    -fx-background-radius: 0 3 3 0;
+}
+
+/* Dropdown arrow symbol */
+.combo-box .arrow {
+    -fx-background-color: #FFBB00;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #FFBB00;         /* Normal item text */
+    -fx-font-size: 14px;
+    -fx-background-color: #011E26;
+}
+
+/* Hovered item */
+.combo-box .list-cell:hover {
+    -fx-background-color: #FFBB00;
+    -fx-text-fill: #011E26;
+}
+
+/* Selected item in popup */
+.combo-box .list-cell:selected {
+    -fx-background-color: #011E26;
+    -fx-text-fill: #FFBB00;
+}
+
+

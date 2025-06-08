@@ -2,23 +2,20 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Model;
-import model.OrderItem;
-import model.User;
-import model.UserEvent;
+import model.*;
 import util.ExportToFile;
 import util.GenerateOrders;
+import util.TransitionUtils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.TransferQueue;
 
 public class OrderHistoryController {
     @FXML
@@ -39,6 +36,9 @@ public class OrderHistoryController {
     @FXML
     private Button exportButton;
 
+    @FXML
+    private VBox vBox;
+
     private Model model;
     private Stage stage;
 
@@ -49,6 +49,15 @@ public class OrderHistoryController {
 
     @FXML
     public void initialize() throws IOException{
+        TransitionUtils.vBoxTransition(vBox);
+        TransitionUtils.buttonTransition(exportButton);
+
+        orderTable.setRowFactory(tv -> {
+            TableRow<OrderItem> row = new TableRow<>();
+            row.setPrefHeight(50); // Set row height to 40 pixels
+            return row;
+        });
+
         idColumn.setCellValueFactory(cellData -> cellData.getValue().orderNoProperty());
         dateTimeColumn.setCellValueFactory(cellData -> cellData.getValue().nowProperty());
         summaryColumn.setCellValueFactory(cellData -> cellData.getValue().summaryProperty());
@@ -64,7 +73,16 @@ public class OrderHistoryController {
             List<OrderItem> orders = GenerateOrders.generateOrder(userOrder);
             orderTable.getItems().setAll(orders);
         }catch (SQLException e){
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

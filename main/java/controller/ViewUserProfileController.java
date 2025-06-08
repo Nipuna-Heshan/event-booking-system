@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -26,10 +27,12 @@ public class ViewUserProfileController {
 
     private Model model;
     private Runnable onProfileUpdate;
+    private static Stage stage;
 
-    public ViewUserProfileController(Model model, Runnable onProfileUpdate) {
+    public ViewUserProfileController(Model model, Runnable onProfileUpdate, Stage stage) {
         this.model = model;
         this.onProfileUpdate = onProfileUpdate;
+        this.stage = stage;
     }
 
     @FXML
@@ -57,6 +60,7 @@ public class ViewUserProfileController {
                 updateStage.show();
             } catch (Exception ex) {
                 ex.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, ex.getMessage());
             }
         });
     }
@@ -70,6 +74,23 @@ public class ViewUserProfileController {
             onProfileUpdate.run();
         }
     }
+
+    public static void showStage(VBox root) {
+        Scene scene = new Scene(root, 300,  450);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("User Profile");
+        stage.show();
+    }
+
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
 }
 
 

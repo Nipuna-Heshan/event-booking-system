@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="10" stylesheets="@../style/style.css" prefHeight="500" prefWidth="800">
+<VBox fx:id="vBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="10" style="-fx-padding: 20 10;" stylesheets="@../style/style.css" prefHeight="500" prefWidth="800">
     <TableView fx:id="orderTable" prefHeight="400" prefWidth="700">
         <columns>
             <TableColumn fx:id="idColumn" text="Order No" prefWidth="100"/>

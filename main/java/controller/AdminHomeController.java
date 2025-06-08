@@ -11,10 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Event;
 import model.Model;
+import util.TransitionUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,6 +39,7 @@ public class AdminHomeController {
     @FXML private MenuItem logoutMenu;
     @FXML private MenuItem viewAllOrdersMenu;
     @FXML private AnchorPane contentArea;
+    @FXML private VBox vBox;
 
     private Stage stage;
     private Stage parentStage;
@@ -51,6 +54,9 @@ public class AdminHomeController {
 
     @FXML
     public void initialize() {
+        TransitionUtils.vBoxHomeTransition(vBox);
+
+
         welcomeLabel.setText("Welcome, Admin!");
         setupTable();
         loadEvents();
@@ -65,6 +71,8 @@ public class AdminHomeController {
             @Override
             protected void updateItem(Event event, boolean empty) {
                 super.updateItem(event, empty);
+                TableRow<Event> row = new TableRow<>();
+                row.setPrefHeight(50);
                 if (event == null || empty) {
                     setStyle("");
                 } else if (!event.getEnabled()) {
@@ -121,6 +129,7 @@ public class AdminHomeController {
             private final Button updateBtn = new Button("Update");
 
             {
+                TransitionUtils.buttonTransition(updateBtn);
                 updateBtn.setOnAction(e -> {
                     Event event = getTableView().getItems().get(getIndex());
                     openUpdateEventModal(event);
@@ -133,6 +142,8 @@ public class AdminHomeController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    Event event = getTableView().getItems().get(getIndex());
+                    updateBtn.setDisable(!event.getEnabled());
                     setGraphic(updateBtn);
                 }
             }
@@ -144,6 +155,7 @@ public class AdminHomeController {
             private final Button deleteBtn = new Button("Delete");
 
             {
+                TransitionUtils.buttonTransition(deleteBtn);
                 deleteBtn.setOnAction(e -> {
                     Event event = getTableView().getItems().get(getIndex());
 
@@ -174,7 +186,7 @@ public class AdminHomeController {
 
                     } catch (SQLException ex) {
                         ex.printStackTrace();
-                        showError("Database Error", "Failed to check bookings or delete event.");
+                        showAlert(Alert.AlertType.ERROR, "Database Error: Failed to check bookings or delete event.");
                     }
                 });
             }
@@ -185,6 +197,8 @@ public class AdminHomeController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    Event event = getTableView().getItems().get(getIndex());
+                    deleteBtn.setDisable(!event.getEnabled());
                     setGraphic(deleteBtn);
                 }
             }
@@ -195,7 +209,7 @@ public class AdminHomeController {
                     refreshTable();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                    showError("Database Error", "Failed to delete event.");
+                    showAlert(Alert.AlertType.ERROR, "Database Error: Failed to delete event.");
                 }
             }
         });
@@ -237,6 +251,7 @@ public class AdminHomeController {
             allEvents.setAll(newEvents);
             eventTable.setItems(allEvents);
         }catch (SQLException e){
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
     }
@@ -247,12 +262,13 @@ public class AdminHomeController {
             Stage modalStage = new Stage();
             AddEventController addEventController = new AddEventController(model, this::refreshTable, modalStage);
             loader.setController(addEventController);
-            Pane root = loader.load();
+            VBox root = loader.load();
             modalStage.setTitle("Add New Event");
             modalStage.setScene(new Scene(root));
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.show();
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
     }
@@ -263,12 +279,13 @@ public class AdminHomeController {
             Stage modalStage = new Stage();
             UpdateEventController updateController = new UpdateEventController(model, event, this::refreshTable, modalStage);
             loader.setController(updateController);
-            Pane root = loader.load();
+            VBox root = loader.load();
             modalStage.setTitle("Update Event");
             modalStage.setScene(new Scene(root));
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.show();
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
     }
@@ -280,12 +297,13 @@ public class AdminHomeController {
             Stage orderStage = new Stage();
             ShowAllOrdersController showAllOrdersController = new ShowAllOrdersController(model, orderStage);
             loader.setController(showAllOrdersController);
-            Pane root = loader.load();
+            VBox root = loader.load();
             orderStage.setTitle("All User Orders");
             orderStage.setScene(new Scene(root));
             orderStage.initModality(Modality.APPLICATION_MODAL);
             orderStage.show();
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
     }
@@ -299,23 +317,24 @@ public class AdminHomeController {
             loginController.showStage(loginRoot);
             stage.close();
         } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
             e.printStackTrace();
         }
     }
 
     public void showStage(Pane root) {
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 900, 800);
         stage.setScene(scene);
         stage.setTitle("Admin Dashboard");
         stage.setResizable(false);
         stage.show();
     }
 
-    private void showError(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(msg);
         alert.showAndWait();
     }
 

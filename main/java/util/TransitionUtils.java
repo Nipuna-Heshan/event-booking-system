@@ -1,7 +1,7 @@
 package util;
 
 import javafx.animation.*;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -13,6 +13,7 @@ public class TransitionUtils {
             st.setToX(1.05);
             st.setToY(1.05);
             st.play();
+            button.setStyle("-fx-background-color: #FFBB00; -fx-text-fill: #011E26;");
         });
 
         button.setOnMouseExited(e -> {
@@ -20,22 +21,103 @@ public class TransitionUtils {
             st.setToX(1);
             st.setToY(1);
             st.play();
+            button.setStyle("-fx-background-color: #011E26; -fx-text-fill: #FFBB00;");
+        });
+    }
+
+    public static void textFieldTransition(TextField textField){
+        textField.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), textField);
+            st.setToX(1.05);
+            st.setToY(1.05);
+            st.play();
+        });
+
+        textField.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), textField);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+    }
+
+    public static void passwordFieldTransition(PasswordField passwordField){
+        passwordField.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), passwordField);
+            st.setToX(1.05);
+            st.setToY(1.05);
+            st.play();
+        });
+
+        passwordField.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), passwordField);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+    }
+
+    public static void spinnerTransition(Spinner spinner){
+        spinner.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), spinner);
+            st.setToX(1.05);
+            st.setToY(1.05);
+            st.play();
+        });
+
+        spinner.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), spinner);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+    }
+
+    public static void comboBoxTransition(ComboBox comboBox){
+        comboBox.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), comboBox);
+            st.setToX(1.05);
+            st.setToY(1.05);
+            st.play();
+        });
+
+        comboBox.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), comboBox);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
         });
     }
 
     public static void gridTransition(GridPane gridPane){
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(2000), gridPane);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.setDelay(Duration.millis(1000));
-        fadeIn.play();
+        gridPane.setManaged(false);
 
-        gridPane.setTranslateY(300); // Start off-screen
+        gridPane.setLayoutY(gridPane.getLayoutY());
 
-        TranslateTransition slideIn = new TranslateTransition(Duration.millis(1900), gridPane);
-        slideIn.setToY(0);
-        slideIn.setDelay(Duration.millis(1000));
-        slideIn.play();
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(gridPane.opacityProperty(), 0)),
+                new KeyFrame(Duration.ZERO, new KeyValue(gridPane.translateYProperty(), 100)),
+                new KeyFrame(Duration.millis(700), new KeyValue(gridPane.opacityProperty(), 1)),
+                new KeyFrame(Duration.millis(700), new KeyValue(gridPane.translateYProperty(), 0))
+        );
+
+        timeline.play();
+    }
+
+    public static void vBoxHomeTransition(VBox vBox){
+        vBox.setManaged(false);
+
+        vBox.setLayoutY(vBox.getLayoutY());
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(vBox.opacityProperty(), 0)),
+                new KeyFrame(Duration.ZERO, new KeyValue(vBox.translateYProperty(), 200)),
+                new KeyFrame(Duration.millis(2000), new KeyValue(vBox.opacityProperty(), 1)),
+                new KeyFrame(Duration.millis(2000), new KeyValue(vBox.translateYProperty(), 0))
+        );
+
+        timeline.play();
+
     }
 
     public static void vBoxTransition(VBox vBox){
@@ -45,9 +127,9 @@ public class TransitionUtils {
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(vBox.opacityProperty(), 0)),
-                new KeyFrame(Duration.ZERO, new KeyValue(vBox.translateYProperty(), 100)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(vBox.opacityProperty(), 1)),
-                new KeyFrame(Duration.millis(750), new KeyValue(vBox.translateYProperty(), 0))
+                new KeyFrame(Duration.ZERO, new KeyValue(vBox.translateYProperty(), 50)),
+                new KeyFrame(Duration.millis(500), new KeyValue(vBox.opacityProperty(), 1)),
+                new KeyFrame(Duration.millis(500), new KeyValue(vBox.translateYProperty(), 0))
         );
 
         timeline.play();

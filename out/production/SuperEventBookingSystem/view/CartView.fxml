@@ -8,6 +8,11 @@
       spacing="15" alignment="CENTER"
       style="-fx-padding: 20;" stylesheets="@../style/style.css">
 
+    <HBox alignment="CENTER_LEFT" style="-fx-padding: 20 0;">
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" wrapText="true" text="Order History" textAlignment="LEFT"
+               maxHeight="200" lineSpacing="-12"/>
+    </HBox>
+
     <TableView fx:id="cartTable" prefHeight="300" prefWidth="600">
         <columns>
             <TableColumn fx:id="titleCol" text="Title" />

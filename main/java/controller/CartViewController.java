@@ -57,6 +57,12 @@ public class CartViewController {
         TransitionUtils.buttonTransition(checkoutButton);
         TransitionUtils.buttonTransition(closeButton);
 
+        cartTable.setRowFactory(tv -> {
+            TableRow<CartItem> row = new TableRow<>();
+            row.setPrefHeight(50); // Set row height to 40 pixels
+            return row;
+        });
+
         titleCol.setCellValueFactory(cell -> cell.getValue().getEvent().titleProperty());
         dayCol.setCellValueFactory(cell -> cell.getValue().getEvent().dayProperty());
         qtyCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -67,6 +73,7 @@ public class CartViewController {
             private final Button deleteBtn = new Button("Remove");
 
             {
+                TransitionUtils.buttonTransition(deleteBtn);
                 deleteBtn.setOnAction(e -> {
                     CartItem item = getTableView().getItems().get(getIndex());
                     cart.removeItem(item.getEvent());
@@ -84,6 +91,7 @@ public class CartViewController {
             private final Button updateBtn = new Button("Update");
 
             {
+                TransitionUtils.buttonTransition(updateBtn);
                 updateBtn.setOnAction(e -> {
                     CartItem item = getTableView().getItems().get(getIndex());
                     openUpdateModal(item);
@@ -99,7 +107,9 @@ public class CartViewController {
 
         cartTable.getItems().setAll(cart.getItems());
         refreshTable();
-
+        if (cart.getItems().isEmpty()){
+            checkoutButton.setDisable(true);
+        }
         checkoutButton.setOnAction(e -> {
             try {
                 originalEvents = model.getEventDao().getAllEvents();
@@ -201,6 +211,7 @@ public class CartViewController {
             modal.setScene(new Scene(loader.load()));
             modal.showAndWait();
         } catch (IOException ex) {
+            showAlert(Alert.AlertType.ERROR, ex.getMessage());
             ex.printStackTrace();
         }
     }

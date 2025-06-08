@@ -6,9 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15" fx:id="vBox" alignment="CENTER" prefWidth="250" prefHeight="300" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../style/style.css">
-    <Label fx:id="eventNameLabel" />
+<VBox spacing="15" fx:id="vBox" alignment="CENTER" prefWidth="320" prefHeight="400" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../style/style.css">
+    <Label text="EVENT" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-padding: 10 90; -fx-background-color: #FFBB00" />
+    <Label fx:id="eventNameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" wrapText="true" textAlignment="CENTER"/>
+    <Label fx:id="availabilityLabel"/>
     <Spinner fx:id="quantitySpinner" editable="true" />
-    <Label fx:id="availabilityLabel" />
     <Button fx:id="addToCartButton" text="Add to Cart" />
 </VBox>

@@ -15,7 +15,7 @@ public class ExportToFile {
 
     public static void exportToFile(List<OrderItem> orders, Stage ownerStage) {
         if (orders.isEmpty()) {
-            showAlert("No Orders", "There are no orders to export.");
+            showAlert(Alert.AlertType.ERROR, "There are no orders to export.");
             return;
         }
 
@@ -46,19 +46,20 @@ public class ExportToFile {
                     writer.newLine();
                 }
 
-                showAlert("Export Successful", "Order history exported to:\n" + file.getAbsolutePath());
+                showAlert(Alert.AlertType.INFORMATION,"Export Successful,\nOrder history exported to:\n" + file.getAbsolutePath());
 
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert("Export Failed", "An error occurred while exporting:\n" + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Export Failed\nAn error occurred while exporting:\n" + e.getMessage());
             }
         }
     }
 
-    private static void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(message);
+    private static void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
         alert.showAndWait();
     }
 }

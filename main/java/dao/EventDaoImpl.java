@@ -32,7 +32,7 @@ public class EventDaoImpl implements EventDao{
         """;
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              Statement stmt = conn.createStatement()) {
-//            stmt.executeUpdate("DROP TABLE IF EXISTS event");
+            stmt.executeUpdate("DROP TABLE IF EXISTS event");
             stmt.execute(sql);
             loadInitialDataFromResourceIfEmpty(conn);
         } catch (SQLException | IOException e) {

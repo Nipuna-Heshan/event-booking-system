@@ -3,12 +3,17 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Event;
 import model.Model;
 import model.UserEvent;
+import util.TransitionUtils;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -30,6 +35,8 @@ public class ShowAllOrdersController {
     private TableColumn<UserEvent, String> timestampCol;
     @FXML
     private TableColumn<UserEvent, Double> totalCol;
+    @FXML
+    private VBox vBox;
 
     private final Model model;
     private final Stage stage;
@@ -41,6 +48,14 @@ public class ShowAllOrdersController {
 
     @FXML
     public void initialize() {
+        TransitionUtils.vBoxTransition(vBox);
+
+        ordersTable.setRowFactory(tv -> {
+            TableRow<UserEvent> row = new TableRow<>();
+            row.setPrefHeight(50); // Set row height to 40 pixels
+            return row;
+        });
+
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -59,6 +74,16 @@ public class ShowAllOrdersController {
             ordersTable.setItems(observableOrders);
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
         }
     }
+
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Cart");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
 }
