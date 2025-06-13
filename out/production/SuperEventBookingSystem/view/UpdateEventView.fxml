@@ -6,13 +6,13 @@
 
 <VBox fx:id="vBox" alignment="TOP_CENTER" spacing="15" style="-fx-padding: 30 10" xmlns:fx="http://javafx.com/fxml" stylesheets="@../style/style.css">
     <Label text="Update Event Details" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;" prefWidth="400" alignment="CENTER"/>
+    <Label fx:id="title"  style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;" prefWidth="400" alignment="CENTER"/>
 
     <GridPane hgap="10" vgap="10" alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints halignment="RIGHT" />
             <ColumnConstraints prefWidth="200" />
         </columnConstraints>
-
 
         <Label text="Location:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="locationField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>

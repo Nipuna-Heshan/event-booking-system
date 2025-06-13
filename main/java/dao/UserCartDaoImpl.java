@@ -17,7 +17,8 @@ public class UserCartDaoImpl implements UserCartDao {
 
     @Override
     public void setup() throws SQLException {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+        Connection connection = DatabaseConnection.getInstance().getConnection();
+        try (
              Statement stmt = connection.createStatement();) {
 //			stmt.executeUpdate("DROP TABLE IF EXISTS " + TABLE_NAME);
             String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
@@ -35,7 +36,8 @@ public class UserCartDaoImpl implements UserCartDao {
     @Override
     public void addToCart(String username, Event event, int quantity) throws SQLException {
         String sql = "INSERT INTO " + TABLE_NAME + "(username, title, location, day, quantity) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.setString(2, event.getTitle());
@@ -46,12 +48,15 @@ public class UserCartDaoImpl implements UserCartDao {
         }
     }
 
-    public void updateQty(String username, int quantity) throws SQLException{
-        String sql = "UPDATE " + TABLE_NAME + " SET quantity = ? WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+    public void updateQty(String title, String location, String day, int quantity) throws SQLException{
+        String sql = "UPDATE " + TABLE_NAME + " SET quantity = ? WHERE title = ? AND location = ? AND day = ?";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
         PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, quantity);
-            stmt.setString(2, username);
+            stmt.setString(2, title);
+            stmt.setString(3, location);
+            stmt.setString(4, day);
             stmt.executeUpdate();
         }
     }
@@ -61,7 +66,8 @@ public class UserCartDaoImpl implements UserCartDao {
         List<CartItem> items = new ArrayList<>();
         events = model.getEventDao().getAllEvents();
         String sql = "SELECT title, location, day, quantity FROM " + TABLE_NAME + " WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -84,7 +90,8 @@ public class UserCartDaoImpl implements UserCartDao {
     @Override
     public void removeUserCart(String username) throws SQLException {
         String sql = "DELETE FROM user_cart WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();

@@ -30,9 +30,10 @@ public class EventDaoImpl implements EventDao{
                 is_enabled BOOLEAN DEFAULT 1
             );
         """;
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("DROP TABLE IF EXISTS event");
+//            stmt.executeUpdate("DROP TABLE IF EXISTS event");
             stmt.execute(sql);
             loadInitialDataFromResourceIfEmpty(conn);
         } catch (SQLException | IOException e) {
@@ -71,11 +72,11 @@ public class EventDaoImpl implements EventDao{
     }
 
     @Override
-    public List<Event> getAllEvents() {
+    public List<Event> getAllEvents() throws SQLException {
         List<Event> events = new ArrayList<>();
         String sql = "SELECT * FROM event ORDER BY title ASC";
-
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -103,8 +104,8 @@ public class EventDaoImpl implements EventDao{
     public void saveEvents(List<Event> events) throws SQLException {
         String deleteSql = "DELETE FROM event";
         String insertSql = "INSERT INTO event (title, location, day, price, soldTickets, totalTickets, is_enabled) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              Statement deleteStmt = conn.createStatement();
              PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
 
@@ -130,7 +131,8 @@ public class EventDaoImpl implements EventDao{
     @Override
     public Event findEvent(String title, String location, String day) throws SQLException {
         String sql = "SELECT * FROM event WHERE title = ? AND location = ? AND day = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, title);
@@ -161,7 +163,8 @@ public class EventDaoImpl implements EventDao{
     @Override
     public void updateEventEnabledStatus(int eventId, boolean isEnabled) throws SQLException {
         String sql = "UPDATE event SET is_enabled = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setBoolean(1, isEnabled);
             stmt.setInt(2, eventId);
@@ -172,7 +175,8 @@ public class EventDaoImpl implements EventDao{
     @Override
     public void addEvent(Event event) throws SQLException {
         String sql = "INSERT INTO event (title, location, day, price, soldTickets, totalTickets, is_enabled) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, event.getTitle());
@@ -190,7 +194,8 @@ public class EventDaoImpl implements EventDao{
     @Override
     public void updateEventDetails(Event event) throws SQLException {
         String sql = "UPDATE event SET location = ?, day = ?, price = ?, totalTickets = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, event.getLocation());
             stmt.setString(2, event.getDay());
@@ -204,7 +209,8 @@ public class EventDaoImpl implements EventDao{
     @Override
     public void deleteEvent(int eventId) throws SQLException {
         String sql = "DELETE FROM event WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, eventId);
             stmt.executeUpdate();

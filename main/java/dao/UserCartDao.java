@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserCartDao {
     void setup() throws SQLException;
     void addToCart(String username, Event event, int quantity) throws SQLException;
-    void updateQty(String username, int quantity) throws  SQLException;
+    void updateQty(String title, String location, String day, int quantity) throws  SQLException;
     List<CartItem> getUserCart(String username, Model model) throws SQLException;
     void removeUserCart(String username) throws SQLException;
 }

@@ -136,7 +136,7 @@ public class CartViewController {
     }
 
     private void refreshTable() {
-        cartTable.refresh();
+        cartTable.getItems().setAll(cart.getItems());
         totalLabel.setText("Total: $" + String.format("%.2f", cart.getTotalPrice()));
     }
 
@@ -164,7 +164,7 @@ public class CartViewController {
                 // Check availability
                 int available = event.getRemainingTickets() - cart.getQuantityInCart(event) + qty;
                 if (qty > available) {
-                    showAlert(Alert.AlertType.ERROR, "Not enough available tickets for " + event.getTitle());
+                    showAlert(Alert.AlertType.ERROR, "Not enough available tickets for " + event.getTitle() + " " + event.getDay());
                     return;
                 }
 

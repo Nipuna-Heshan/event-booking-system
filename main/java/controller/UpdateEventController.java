@@ -1,10 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Event;
@@ -20,6 +17,7 @@ public class UpdateEventController {
     @FXML private Button updateBtn;
     @FXML private Button cancelBtn;
     @FXML private VBox vBox;
+    @FXML private Label title;
 
     private final Model model;
     private final Event event;
@@ -85,6 +83,7 @@ public class UpdateEventController {
         dayCombo.setValue(event.getDay());
         priceField.setText(String.valueOf(event.getPrice()));
         totalTicketsField.setText(String.valueOf(event.getTotalTickets()));
+        title.setText(event.getTitle());
 
         updateBtn.setOnAction(e -> {
             handleUpdate();

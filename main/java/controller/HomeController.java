@@ -208,7 +208,7 @@ public class HomeController {
 					Event event = getTableView().getItems().get(getIndex());
 					if (BookingUtils.canBook(event.getDay())) {
 						setGraphic(button);
-						button.setDisable(false);
+                        button.setDisable(event.getRemainingTickets() == 0);
 					} else {
 						setGraphic(new Label("Not Available"));
 					}

@@ -23,7 +23,8 @@ public class UserEventDaoImpl implements UserEventDao {
                 "timeStamp TEXT NOT NULL, " +
                 "total DOUBLE NOT NULL" +
                 ")";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              Statement stmt = conn.createStatement()) {
 //            stmt.executeUpdate("DROP TABLE IF EXISTS " + TABLE_NAME);
             stmt.executeUpdate(sql);
@@ -33,7 +34,8 @@ public class UserEventDaoImpl implements UserEventDao {
     @Override
     public void addUserEvent(UserEvent event) throws SQLException {
         String sql = "INSERT INTO " + TABLE_NAME + " (username, title, location, day, quantity, timeStamp, total) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, event.getUsername());
             stmt.setString(2, event.getTitle());
@@ -50,7 +52,8 @@ public class UserEventDaoImpl implements UserEventDao {
     public List<UserEvent> getEventsByUsername(String username) throws SQLException {
         List<UserEvent> events = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
@@ -73,7 +76,8 @@ public class UserEventDaoImpl implements UserEventDao {
     @Override
     public boolean hasBookingsForEvent(String title, String location, String day) throws SQLException {
         String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE title = ? AND location = ? AND day = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, title);
             stmt.setString(2, location);
@@ -87,7 +91,8 @@ public class UserEventDaoImpl implements UserEventDao {
     public List<UserEvent> getAllUserEvents() throws SQLException {
         List<UserEvent> events = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

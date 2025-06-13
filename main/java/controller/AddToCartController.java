@@ -40,10 +40,14 @@ public class AddToCartController {
 
         eventNameLabel.setText(event.getTitle());
         int available = event.getRemainingTickets() - cart.getQuantityInCart(event);
-        available = Math.max(available, 1);
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, available);
+        if (available == 0) {
+            addToCartButton.setDisable(true);
+            availabilityLabel.setText("Not enough tickets are available!");
+        }
+        available = Math.max(available, 0);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, available);
         quantitySpinner.setValueFactory(valueFactory);
-        valueFactory.setValue(1);
+        valueFactory.setValue(0);
         availabilityLabel.setText("Tickets available: " + available);
 
         addToCartButton.setOnAction(e -> handleAddToCart());
@@ -60,7 +64,8 @@ public class AddToCartController {
         try {
             for (CartItem item : model.getUserCartDao().getUserCart(model.getCurrentUser().getUsername(), model)) {
                 if (item.getEvent().getId() == event.getId()) {
-                    model.getUserCartDao().updateQty(model.getCurrentUser().getUsername(), item.getQuantity() + qty);
+                    model.getUserCartDao().updateQty(item.getEvent().getTitle(), item.getEvent().getLocation(), item.getEvent().getDay(), item.getQuantity() + qty);
+                    stage.close();
                     return;
                 }
             }
