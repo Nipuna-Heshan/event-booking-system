@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="sqlite-jdbc-3.49.1.0" level="project" />
-    <orderEntry type="library" name="opentest4j-1.2.0" level="project" />
-    <orderEntry type="library" name="junit-jupiter-engine-5.10.0" level="project" />
-    <orderEntry type="library" name="junit-jupiter-api-5.10.0" level="project" />
-    <orderEntry type="library" name="apiguardian-api-1.1.2" level="project" />
-    <orderEntry type="library" name="junit-platform-engine-1.10.0" level="project" />
-    <orderEntry type="library" name="junit-platform-commons-1.10.0" level="project" />
   </component>
 </module>

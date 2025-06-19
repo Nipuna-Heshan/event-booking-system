@@ -9,7 +9,7 @@ public class DatabaseConnection {
 	private static DatabaseConnection instance;
 	private Connection connection;
 	// URL pattern for database
-	private static final String DB_URL = "jdbc:sqlite:main/resources/database/application.db";
+	private static final String DB_URL = "jdbc:sqlite:src/main/resources/database/application.db";
 
 	// Private constructor prevents instantiation from other classes
 	private DatabaseConnection() throws SQLException{
